@@ -19,7 +19,7 @@ app.listen(port, (req, res) => {
 });
 
 app.get('/', (req, res) => {
-    res.send('Welcome to the MERN Stack App, Dumbass!');
+    res.send('Welcome to the MERN Stack App');
 });
 
 mongoose.connect(uri, { 
