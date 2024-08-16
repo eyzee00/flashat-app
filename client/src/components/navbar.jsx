@@ -6,7 +6,7 @@ const NavBar = () => {
     <Navbar bg="dark" className="mb-4" style={{ height: "3.75rem" }}>
         <Container>
             <h2>
-                <Link to="/" className="link-light text-decoration-none">Flashat</Link>
+                <Link to="/" className="link-light text-decoration-none">FlaXhat</Link>
             </h2>
             <span className="text-warning">Instant Messaging At your Fingertips!</span>
             <Nav>

@@ -2,26 +2,36 @@ import { Form, Row, Col, Stack, Alert, Button } from "react-bootstrap";
 
 const Login = () => {
     return (
-    <>
-    <Form>
-        <Row style={{
-            height: "100vh",
-            justifyContent: "center",
-            paddingTop: "10%"
-        }}>
-            <Col xs={6}>
-                <Stack gap={3}>
-                    <h2>Log In</h2>
+        <>
+            <Form>
+                <Row className="justify-content-center align-items-center vh-100">
+                    <Col xs={6}>
+                        <Stack gap={3}>
+                            <h2 className="text-center">Log In</h2>
 
-                    <Form.Control type="email" placeholder="Email"/>
-                    <Form.Control type="password" placeholder="Password"/>
-                    <Button variant="primary" type="submit">Login</Button>
-                    <Alert variant="info">Have not created an account yet? <Alert.Link href="/login">Register Now!</Alert.Link></Alert>
-                </Stack>
-            </Col>
-        </Row>
-    </Form>
-    </>
+                            <Form.Group controlId="email">
+                                <Form.Label>Email</Form.Label>
+                                <Form.Control type="email" placeholder="Enter your email" />
+                            </Form.Group>
+
+                            <Form.Group controlId="password">
+                                <Form.Label>Password</Form.Label>
+                                <Form.Control type="password" placeholder="Enter your password" />
+                            </Form.Group>
+
+                            <Button variant="primary" type="submit" className="w-100">
+                                Login
+                            </Button>
+
+                            <Alert variant="info" className="text-center">
+                                Have not created an account yet?{" "}
+                                <Alert.Link href="/register">Register Now!</Alert.Link>
+                            </Alert>
+                        </Stack>
+                    </Col>
+                </Row>
+            </Form>
+        </>
     );
 }
  
