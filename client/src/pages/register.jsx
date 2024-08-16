@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { AuthContext } from "../context/authContext";
 
 const Register = () => {
+    const { registerInfo, updateRegisterInfo } = useContext(AuthContext);
     return (
         <>
             <Form>
@@ -17,17 +18,32 @@ const Register = () => {
 
                             <Form.Group controlId="name">
                                 <Form.Label>Name</Form.Label>
-                                <Form.Control type="text" placeholder="Enter your name" />
+                                <Form.Control type="text" placeholder="Enter your name" onChange={(e) => {
+                                    updateRegisterInfo({
+                                        ...registerInfo,
+                                        name: e.target.value
+                                    });
+                                }} />
                             </Form.Group>
 
                             <Form.Group controlId="email">
                                 <Form.Label>Email</Form.Label>
-                                <Form.Control type="email" placeholder="Enter your email" />
+                                <Form.Control type="email" placeholder="Enter your email" onChange={(e) => {
+                                    updateRegisterInfo({
+                                        ...registerInfo,
+                                        email: e.target.value
+                                    });
+                                }} />
                             </Form.Group>
 
                             <Form.Group controlId="password">
                                 <Form.Label>Password</Form.Label>
-                                <Form.Control type="password" placeholder="Enter your password" />
+                                <Form.Control type="password" placeholder="Enter your password" onChange={(e) => {
+                                    updateRegisterInfo({
+                                        ...registerInfo,
+                                        password: e.target.value
+                                    });
+                                }} />
                             </Form.Group>
 
                             <Button variant="primary" type="submit">Register</Button>
