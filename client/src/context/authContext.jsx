@@ -21,13 +21,18 @@ const AuthContextProvider = ({ children }) => {
         password: "",
     });
 
-    console.log("User", user);
+
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("user"));
         if (user) {
             setUser(user);
         }
+    }, []);
+
+    const logOutUser = useCallback(() => {
+        localStorage.removeItem("user");
+        setUser(null);
     }, []);
 
     const registerUser = useCallback(async (e) => {
@@ -52,7 +57,7 @@ const AuthContextProvider = ({ children }) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{  user, registerInfo, updateRegisterInfo, registerUser, registerError, isLoading }}>
+        <AuthContext.Provider value={{  user, registerInfo, updateRegisterInfo, registerUser, logOutUser, registerError, isLoading }}>
             {children}
         </AuthContext.Provider>
     );
