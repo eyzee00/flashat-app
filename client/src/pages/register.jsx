@@ -3,10 +3,10 @@ import { useContext } from "react";
 import { AuthContext } from "../context/authContext";
 
 const Register = () => {
-    const { registerInfo, updateRegisterInfo } = useContext(AuthContext);
+    const { registerInfo, updateRegisterInfo, registerUser, registerError, isLoading } = useContext(AuthContext);
     return (
         <>
-            <Form>
+            <Form onSubmit={registerUser}>
                 <Row style={{
                     height: "100vh",
                     justifyContent: "center",
@@ -16,7 +16,7 @@ const Register = () => {
                         <Stack gap={3}>
                             <h2 className="text-center">Register Now And Start Chatting!</h2>
 
-                            <Form.Group controlId="name">
+                            <Form.Group>
                                 <Form.Label>Name</Form.Label>
                                 <Form.Control type="text" placeholder="Enter your name" onChange={(e) => {
                                     updateRegisterInfo({
@@ -26,7 +26,7 @@ const Register = () => {
                                 }} />
                             </Form.Group>
 
-                            <Form.Group controlId="email">
+                            <Form.Group>
                                 <Form.Label>Email</Form.Label>
                                 <Form.Control type="email" placeholder="Enter your email" onChange={(e) => {
                                     updateRegisterInfo({
@@ -36,7 +36,7 @@ const Register = () => {
                                 }} />
                             </Form.Group>
 
-                            <Form.Group controlId="password">
+                            <Form.Group>
                                 <Form.Label>Password</Form.Label>
                                 <Form.Control type="password" placeholder="Enter your password" onChange={(e) => {
                                     updateRegisterInfo({
@@ -46,8 +46,11 @@ const Register = () => {
                                 }} />
                             </Form.Group>
 
-                            <Button variant="primary" type="submit">Register</Button>
-                            <Alert variant="info">Already have an account? <Alert.Link href="/login">Login Now!</Alert.Link></Alert>
+                            <Button variant="primary" type="submit">{isLoading ? "Creating Account..." : "Register"}</Button>
+                            {
+                                registerError?.error && <Alert variant="danger"><p>{registerError?.message}</p></Alert>
+                            }
+
                         </Stack>
                     </Col>
                 </Row>
