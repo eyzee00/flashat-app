@@ -1,4 +1,4 @@
-import { createContext, useState, useCallback } from "react";
+import { createContext, useState, useCallback, useEffect } from "react";
 import PropTypes from "prop-types";
 import { baseUrl, registerRequest } from "../utils/services";
 
@@ -20,6 +20,15 @@ const AuthContextProvider = ({ children }) => {
         email: "",
         password: "",
     });
+
+    console.log("User", user);
+
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (user) {
+            setUser(user);
+        }
+    }, []);
 
     const registerUser = useCallback(async (e) => {
         e.preventDefault();
