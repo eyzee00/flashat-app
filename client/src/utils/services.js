@@ -1,6 +1,6 @@
 export const baseUrl = 'http://localhost:6800/api';
 
-export const registerRequest = async (url, body) => {
+export const postRequest = async (url, body) => {
     const response = await fetch(url, {
         method: 'POST',
         headers: {

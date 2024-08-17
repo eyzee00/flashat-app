@@ -50,6 +50,7 @@ const Register = () => {
                             {
                                 registerError?.error && <Alert variant="danger"><p>{registerError?.message}</p></Alert>
                             }
+                            <Alert variant="info" className="text-center">Already Have an Account? <Alert.Link href="/login">Log In Now!</Alert.Link></Alert>
 
                         </Stack>
                     </Col>
