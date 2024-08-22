@@ -13,6 +13,7 @@ const mongoose = require('mongoose');
 // Import routes
 const userRouter = require('./routes/userRoute');
 const chatRouter = require('./routes/chatRoute');
+const messageRouter = require('./routes/messageRoute');
 
 // Initialize express app
 const app = express();
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use(cors());
 app.use('/api/users', userRouter);
 app.use('/api/chats', chatRouter);
+app.use('/api/messages', messageRouter);
 
 // Set up the port and URI
 const port = process.env.PORT || 6800;
