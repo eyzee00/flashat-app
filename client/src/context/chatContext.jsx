@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from 'react';
-import { getRequest, baseUrl, postRequest } from '../utils/services';
+import { getRequest, baseUrl } from '../utils/services';
 import PropTypes from 'prop-types';
 
 export const ChatContext = createContext();
