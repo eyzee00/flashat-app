@@ -1,9 +1,18 @@
+/**
+ * Description: Auth context to handle user registration, login, and logout
+ */
+
+// Import the createContext, useState, useCallback, and useEffect hooks from React
 import { createContext, useState, useCallback, useEffect } from "react";
+// Import the PropTypes package
 import PropTypes from "prop-types";
+// Import the baseUrl and postRequest functions
 import { baseUrl, postRequest } from "../utils/services";
 
+// Create a new context
 const AuthContext = createContext();
 
+// Create a new component
 const AuthContextProvider = ({ children }) => {
 
     // Add the following prop type validation for the children prop
@@ -27,8 +36,6 @@ const AuthContextProvider = ({ children }) => {
         email: "",
         password: "",
     });
-
-    console.log("loginInfo", loginInfo);
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("user"));
