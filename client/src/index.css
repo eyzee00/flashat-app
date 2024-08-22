@@ -2,10 +2,11 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
 
 body {
+  color: white;
   font-family: 'Merriweather', serif;
   background: rgb(50, 50, 50);
-  color: white;
 }
+
 h1, h2, h3, h4, h5, h6 {
   font-family: 'DM Serif Text', serif;
 }
