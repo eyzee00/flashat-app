@@ -30,7 +30,7 @@ const createChat = async (req, res) => {
 
 // API to get all chats
 const findUserChats = async (req, res) => {
-    const {userId} = req.params.userId;
+    const {userId} = req.params;
 
     try {
         // Get all chats where the given user is a member
@@ -57,4 +57,7 @@ const findChat = async (req, res) => {
         console.log(error);
         res.status(500).json({error});
     }
-};
+}; 
+
+// Export the APIs
+module.exports = { createChat, findUserChats, findChat };
