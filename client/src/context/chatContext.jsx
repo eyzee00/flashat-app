@@ -25,6 +25,11 @@ export const ChatContextProvider = ({ children, user }) => {
 
     const [ potentialChats, setPotentialChats ] = useState([]);
 
+    const [ currentChat, setCurrentChat ] = useState(null);
+
+    const [ messages, setMessages ] = useState([]);
+    const [ isMessagesLoading, setIsMessagesLoading ] = useState(false);
+    const [ messagesError, setMessagesError ] = useState(null);
 
     // Fetch potential chats
     useEffect(() => {
@@ -63,7 +68,53 @@ export const ChatContextProvider = ({ children, user }) => {
     }, [userChats, user]);
 
 
+    const updateCurrentChat = useCallback((chat) => {
+        setCurrentChat(chat);
+    }, []);
+
+    // Fetch messages
+    useEffect(() => {
+        const getMessages = async () => {
+            // Check if there is a current chat
+            if (currentChat) {
+                setIsMessagesLoading(true);
+                setMessagesError(null);
+
+                // Fetch messages for current chat
+                const response = await getRequest(`${baseUrl}/messages/${currentChat._id}`);
+
+                // Check if fetching messages was successful
+                if (response.error) {
+                    return setMessagesError(response);
+                }
+
+                // Set messages to state
+                setIsMessagesLoading(false);
+                setMessages(response);
+            }
+        };
+        getMessages();
+    }, [currentChat]);
+
     const createChat = useCallback(async (firstUser, secondUser) => {
+
+    
+        // Check if users are the same
+        if (firstUser === secondUser) {
+            return console.log("Cannot Create Chat With Yourself");
+        }
+
+        // Check if chat already exists
+
+        if (userChats) {
+            const chatExists = userChats.some((chat) => {
+                return chat.members[0] === firstUser && chat.members[1] === secondUser;
+            });
+
+            if (chatExists) {
+                return console.log("Chat Already Exists");
+            }
+        }
         // Create chat between two users
         const response = await postRequest(`${baseUrl}/chats/`, JSON.stringify({ firstUser, secondUser }));
 
@@ -102,7 +153,8 @@ export const ChatContextProvider = ({ children, user }) => {
 
     // Return provider with state variables and functions to be used by children
     return (
-        <ChatContext.Provider value={{ userChats, isUserChatsLoading, userChatsError, potentialChats, createChat }}>
+        <ChatContext.Provider value={{ userChats, isUserChatsLoading, userChatsError,
+          potentialChats, createChat, updateCurrentChat }}>
             { children }
         </ChatContext.Provider>
     );
