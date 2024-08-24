@@ -31,6 +31,8 @@ export const ChatContextProvider = ({ children, user }) => {
     const [ isMessagesLoading, setIsMessagesLoading ] = useState(false);
     const [ messagesError, setMessagesError ] = useState(null);
 
+    const [ sendMessageError, setSendMessageError ] = useState(false);
+    const [ newMessage, setNewMessage ] = useState(null);
 
     // Fetch potential chats
     useEffect(() => {
@@ -97,18 +99,40 @@ export const ChatContextProvider = ({ children, user }) => {
         getMessages();
     }, [currentChat]);
 
+    const sendTextMessage = useCallback(async (textMessage, sender, currentChatId, setTextMessage) => {
+        // Check if there is a current chat
+        if (currentChatId) {
+            // Send message
+            const response = await postRequest(`${baseUrl}/messages`, JSON.stringify({ 
+                chatId: currentChatId,
+                senderId: sender._id,
+                text: textMessage
+            }));
+
+            // Check if sending message was successful
+            if (response.error) {
+                return setSendMessageError(response);
+            }
+
+            setNewMessage(response);
+            // Add message to messages
+            setMessages((prev) => { return [...prev, response] });
+
+            // Clear text message
+            setTextMessage("");
+        }
+    }, []);
+
     const createChat = useCallback(async (firstUser, secondUser) => {
 
-        // Check if users are the same
-        if (firstUser === secondUser) {
-            return console.log("Cannot Create Chat With Yourself");
-        }
-
         // Check if chat already exists
+        if (firstUser === secondUser) {
+            return console.log("Cannot Create Chat With Self");
+        }
 
         if (userChats) {
             const chatExists = userChats.some((chat) => {
-                return chat.members[0] === firstUser && chat.members[1] === secondUser;
+                return chat?.members[0] === firstUser && chat?.members[1] === secondUser;
             });
 
             if (chatExists) {
@@ -117,6 +141,7 @@ export const ChatContextProvider = ({ children, user }) => {
         }
         // Create chat between two users
         const response = await postRequest(`${baseUrl}/chats/`, JSON.stringify({ firstUser, secondUser }));
+        
 
         // Check if creating chat was successful
         if (response.error) {
@@ -147,7 +172,15 @@ export const ChatContextProvider = ({ children, user }) => {
 
                 // Set user chats to state
                 setIsUserChatsLoading(false);
-                setUserChats(response);
+                const processedChats = response.map(chat => {
+                    if (chat.members[0] == user._id) {
+                        // Reverse members array if current user is not the first member
+                        chat.members.reverse();
+                    }
+                    return chat;
+                });
+                setUserChats(processedChats);
+                console.log(processedChats);
             };
         };
         getUserChats();
@@ -156,7 +189,8 @@ export const ChatContextProvider = ({ children, user }) => {
     // Return provider with state variables and functions to be used by children
     return (
         <ChatContext.Provider value={{ userChats, isUserChatsLoading, userChatsError,
-          potentialChats, createChat, updateCurrentChat, messages, isMessagesLoading, messagesError, currentChat }}>
+          potentialChats, createChat, updateCurrentChat, messages, isMessagesLoading,
+            messagesError, currentChat, sendTextMessage, newMessage, sendMessageError }}>
             { children }
         </ChatContext.Provider>
     );

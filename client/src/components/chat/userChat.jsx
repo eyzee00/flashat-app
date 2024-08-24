@@ -1,9 +1,10 @@
+import PropTypes from "prop-types";
 import { useFetchRecipient } from "../../hooks/useFetchRecipient";
 import { Stack } from "react-bootstrap";
 import profile_avatar from "../../assets/profile_avatar.svg";
 
 const UserChat = ({chat, user}) => {
-    const { recipientUser, recipientError } = useFetchRecipient(chat, user);
+    const { recipientUser } = useFetchRecipient(chat, user);
 
     return (
     <>
@@ -26,5 +27,10 @@ const UserChat = ({chat, user}) => {
         </Stack>
     </> );
 }
+
+UserChat.propTypes = {
+    chat: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired
+};
  
 export default UserChat;

@@ -14,7 +14,7 @@ const PotentialChats = () => {
 
     return (
         <div className="table-wrapper">
-            <button className="potential-users-button" onClick={toggleTable}>Toggle Table</button>
+            <button className="potential-users-button" onClick={toggleTable}>Start Chat</button>
             {showTable && (
                 <Table className="potential-users-table" hover bordered striped style={{ "--bs-table-bg": "none" }}>
                     <thead>
@@ -24,14 +24,14 @@ const PotentialChats = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {potentialChats?.map((usr, index) => (
+                        {potentialChats && potentialChats?.map((u, index) => (
                             <tr
                                 key={index}
                                 onClick={() => {
-                                    createChat(usr._id, user._id);
+                                    createChat(u._id, user._id);
                                 }}
                             >
-                                <td>{usr?.name}</td>
+                                <td>{u?.name}</td>
                                 <td>
                                     <span className="user-online1"></span>
                                 </td>
