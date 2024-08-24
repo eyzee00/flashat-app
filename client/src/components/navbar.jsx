@@ -5,32 +5,53 @@ import { AuthContext } from "../context/authContext";
 
 const NavBar = () => {
     const { user, logOutUser } = useContext(AuthContext);
-
+    
     return ( 
-    <Navbar bg="dark" className="mb-4" style={{ height: "3.75rem" }}>
-        <Container>
-            <h2>
-                <Link to="/" className="link-light text-decoration-none">FlaXhat</Link>
-            </h2>
-            <span className="text-warning">{user ? <p>Logged in as {user.name}</p> : 
-            <p>Instant Messaging At Your Fingertips!</p>}</span>
-            <Nav>
-                <Stack direction="horizontal" gap={3}>
-                    {
-                        !user && (<>
-                        <Link to="/login" className="link-light text-decoration-none">Login</Link>
-                        <Link to="/register" className="link-light text-decoration-none">Register</Link>
-                        </>)
-                    }
-                    {
-                        user && (<><Link to="/login" className="link-light text-decoration-none" onClick={logOutUser}>
-                            Logout
-                            </Link></>)
-                    }
-                </Stack>
-            </Nav>
-        </Container>
-    </Navbar> 
+        <Navbar className="mb-4" style={{ height: "3.75rem", backgroundColor: "rgb(3, 10, 14)" }}>
+            <Container>
+                <h2>
+                    <Link to="/" className="link-light text-decoration-none">FlaXhat</Link>
+                </h2>
+                <span className="text-warning">{user ? <p>Logged in as {user.name}</p> : <p>Instant Messaging At Your Fingertips!</p>}</span>
+                <Nav>
+                    <Stack direction="horizontal" gap={3}>
+                        {!user && (
+                            <>
+                                {window.location.pathname !== "/register" && (
+                                    <Link
+                                        to="/register"
+                                        className={`link-light text-decoration-none ${
+                                            window.location.pathname === "/register" ? "active" : ""
+                                        }`}
+                                    >
+                                        Register
+                                    </Link>
+                                )}
+                                {window.location.pathname !== "/login" && (
+                                    <Link
+                                        to="/login"
+                                        className={`link-light text-decoration-none ${
+                                            window.location.pathname === "/login" ? "active" : ""
+                                        }`}
+                                    >
+                                        Login
+                                    </Link>
+                                )}
+                            </>
+                        )}
+                        {user && (
+                            <Link
+                                to="/login"
+                                className="link-light text-decoration-none"
+                                onClick={logOutUser}
+                            >
+                                Logout
+                            </Link>
+                        )}
+                    </Stack>
+                </Nav>
+            </Container>
+        </Navbar> 
     );
 }
  

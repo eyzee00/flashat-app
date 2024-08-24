@@ -8,16 +8,15 @@ const PotentialChats = () => {
     const { potentialChats, createChat } = useContext(ChatContext);
     const [showTable, setShowTable] = useState(false);
 
-    console.log(potentialChats);
     const toggleTable = () => {
         setShowTable(!showTable);
     };
 
     return (
-        <div>
+        <div className="table-wrapper">
             <button className="potential-users-button" onClick={toggleTable}>Toggle Table</button>
             {showTable && (
-                <Table hover bordered striped>
+                <Table className="potential-users-table" hover bordered striped style={{ "--bs-table-bg": "none" }}>
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -26,19 +25,18 @@ const PotentialChats = () => {
                     </thead>
                     <tbody>
                         {potentialChats?.map((usr, index) => (
-                                <tr
-                                    key={index}
-                                    onClick={() => {
-                                        createChat(usr._id, user._id);
-                                    }}
-
-                                >
-                                    <td>{usr?.name}</td>
-                                    <td>
-                                        <span className="user-online1"></span>
-                                    </td>
-                                </tr>
-                            ))}
+                            <tr
+                                key={index}
+                                onClick={() => {
+                                    createChat(usr._id, user._id);
+                                }}
+                            >
+                                <td>{usr?.name}</td>
+                                <td>
+                                    <span className="user-online1"></span>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </Table>
             )}

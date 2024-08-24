@@ -9,25 +9,28 @@
 body {
   color: white;
   font-family: 'Merriweather', serif;
-  background: rgb(30, 32, 30);
+  background: rgb(4, 13, 18);
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'DM Serif Text', serif;
 }
 
+.table-wrapper {
+  width: 155px;
+}
+
 .potential-users-button {
-  background-color: rgb(60, 61, 55);
+  background-color: rgb(24, 61, 61);
   color: white;
   border-color: black;
-  width: 146px;
+  width: inherit;
 }
 
 .potential-users-table {
-  background: rgb(60, 61, 55);
+  background-color: rgb(92, 131, 116);
   color: white;
   border-color: black;
-  width: 146px;
 }
 
 /* All users */
@@ -100,7 +103,7 @@ h1, h2, h3, h4, h5, h6 {
 .chat-box {
   max-height: calc(100vh - 10rem);
   overflow-y: auto;
-  background: rgb(25, 25, 25);
+  background: rgb(6, 19, 26);
   border-radius: 10px;
 }
 
@@ -115,7 +118,7 @@ h1, h2, h3, h4, h5, h6 {
   justify-content: center;
   padding: 0.75rem;
   color: white;
-  background: rgb(30, 30, 30);
+  background: rgb(3, 10, 14);
 }
 
 /* Messages */

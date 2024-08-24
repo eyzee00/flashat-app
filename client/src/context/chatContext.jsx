@@ -31,6 +31,7 @@ export const ChatContextProvider = ({ children, user }) => {
     const [ isMessagesLoading, setIsMessagesLoading ] = useState(false);
     const [ messagesError, setMessagesError ] = useState(null);
 
+
     // Fetch potential chats
     useEffect(() => {
         const getPotentialChats = async () => {
@@ -98,7 +99,6 @@ export const ChatContextProvider = ({ children, user }) => {
 
     const createChat = useCallback(async (firstUser, secondUser) => {
 
-    
         // Check if users are the same
         if (firstUser === secondUser) {
             return console.log("Cannot Create Chat With Yourself");
@@ -125,7 +125,9 @@ export const ChatContextProvider = ({ children, user }) => {
 
         // Add chat to user chats
         setUserChats((prev) => { return [...prev, response] });
-    }, []);
+    }, [userChats]);
+
+
     // Fetch user chats
     useEffect(() => {
         const getUserChats = async () => {
@@ -154,7 +156,7 @@ export const ChatContextProvider = ({ children, user }) => {
     // Return provider with state variables and functions to be used by children
     return (
         <ChatContext.Provider value={{ userChats, isUserChatsLoading, userChatsError,
-          potentialChats, createChat, updateCurrentChat }}>
+          potentialChats, createChat, updateCurrentChat, messages, isMessagesLoading, messagesError, currentChat }}>
             { children }
         </ChatContext.Provider>
     );
