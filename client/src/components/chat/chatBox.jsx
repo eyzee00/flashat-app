@@ -13,12 +13,9 @@ const ChatBox = () => {
     const [ textMessage, setTextMessage ] = useState("");
 
 
-    if (!recipientUser) {
+    if (!recipientUser || !currentChat) {
         return (
-            <div>
-                <p style={{ textAlign: "center", width: "100%" }}>
-                    Select a chat to start messaging</p>
-            </div>
+            <Stack gap={4} className="chat-box"></Stack>
         );
     }
 

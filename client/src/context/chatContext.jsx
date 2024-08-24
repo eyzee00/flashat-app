@@ -239,7 +239,8 @@ export const ChatContextProvider = ({ children, user }) => {
     return (
         <ChatContext.Provider value={{ userChats, isUserChatsLoading, userChatsError,
           potentialChats, createChat, updateCurrentChat, messages, isMessagesLoading,
-            messagesError, currentChat, sendTextMessage, newMessage, sendMessageError, onlineUsers }}>
+            messagesError, currentChat, sendTextMessage, newMessage, sendMessageError, onlineUsers, 
+            setCurrentChat}}>
             { children }
         </ChatContext.Provider>
     );

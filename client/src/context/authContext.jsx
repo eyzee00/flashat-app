@@ -9,8 +9,10 @@ import PropTypes from "prop-types";
 // Import the baseUrl and postRequest functions
 import { baseUrl, postRequest } from "../utils/services";
 
+
 // Create a new context
 const AuthContext = createContext();
+
 
 // Create a new component
 const AuthContextProvider = ({ children }) => {
