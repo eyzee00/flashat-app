@@ -2,10 +2,12 @@ import PropTypes from "prop-types";
 import { useFetchRecipient } from "../../hooks/useFetchRecipient";
 import { Stack } from "react-bootstrap";
 import profile_avatar from "../../assets/profile_avatar.svg";
+import { useContext } from "react";
+import { ChatContext } from "../../context/chatContext";
 
 const UserChat = ({chat, user}) => {
     const { recipientUser } = useFetchRecipient(chat, user);
-
+    const { onlineUsers } = useContext(ChatContext);
     return (
     <>
         <Stack direction="horizontal" gap={3}
@@ -22,7 +24,11 @@ const UserChat = ({chat, user}) => {
             <div className="d-flex flex-column align-items-end">
                 <div className="date">08/22/2024</div>
                 <div className="this-user-notifications">2</div>
-                <span className="user-online"></span>
+                <span className={
+                    onlineUsers.some((user) => user.userId === recipientUser?._id)
+                        ? "user-online"
+                        : "user-offline"
+                    }></span>
             </div>
         </Stack>
     </> );

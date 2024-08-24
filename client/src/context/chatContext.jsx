@@ -6,6 +6,7 @@
 import { createContext, useState, useEffect, useCallback } from 'react';
 import { getRequest, baseUrl, postRequest } from '../utils/services';
 import PropTypes from 'prop-types';
+import { io } from 'socket.io-client';
 
 // Create context
 export const ChatContext = createContext();
@@ -15,8 +16,9 @@ export const ChatContextProvider = ({ children, user }) => {
     // Add 'children' to props validation
     ChatContextProvider.propTypes = {
         children: PropTypes.node.isRequired,
-        user: PropTypes.object.isRequired,
-    };
+        user: PropTypes.object,
+    // Remove the extra closing brace
+};
 
     // Initialize state variables
     const [ userChats, setUserChats ] = useState(null);
@@ -33,6 +35,54 @@ export const ChatContextProvider = ({ children, user }) => {
 
     const [ sendMessageError, setSendMessageError ] = useState(false);
     const [ newMessage, setNewMessage ] = useState(null);
+
+    const [ socket, setSocket ] = useState(null);
+    const [ onlineUsers, setOnlineUsers ] = useState([]);
+
+    console.log("List Of Online Users", onlineUsers);
+
+
+    // Create socket connection
+    useEffect(() => {
+        const newSocket = io("http://localhost:3080");
+        setSocket(newSocket);
+    
+        return () => { newSocket.disconnect() };
+    }, [user]);
+
+    // Add user to online users
+    useEffect(() => {
+        if (socket === null) return;
+        socket.emit("addNewUser", user?._id);
+        socket.on("getOnlineUsers", (response) => {
+                setOnlineUsers(response);
+            });
+        return () => { socket.off("getOnlineUsers") };
+    }, [socket, user]);
+
+    // send message using socket
+    useEffect(() => {
+        if (socket === null) return;
+
+        const recipientId = currentChat?.members?.find((id) => id !== user?._id);
+
+        if (newMessage) {
+            socket.emit("sendMessage", {...newMessage, recipientId});
+        }
+
+    }, [newMessage, socket, currentChat, user]);
+
+    // Listen for messages
+    useEffect(() => {
+        if (socket === null) return;
+
+        socket.on("getMessage", (response) => {
+            if (currentChat?._id !== response.chatId) return;
+            setMessages((prev) => { return [...prev, response] });
+        });
+
+        return () => { socket.off("getMessage") };
+    } , [socket, currentChat]);
 
     // Fetch potential chats
     useEffect(() => {
@@ -180,7 +230,6 @@ export const ChatContextProvider = ({ children, user }) => {
                     return chat;
                 });
                 setUserChats(processedChats);
-                console.log(processedChats);
             };
         };
         getUserChats();
@@ -190,7 +239,7 @@ export const ChatContextProvider = ({ children, user }) => {
     return (
         <ChatContext.Provider value={{ userChats, isUserChatsLoading, userChatsError,
           potentialChats, createChat, updateCurrentChat, messages, isMessagesLoading,
-            messagesError, currentChat, sendTextMessage, newMessage, sendMessageError }}>
+            messagesError, currentChat, sendTextMessage, newMessage, sendMessageError, onlineUsers }}>
             { children }
         </ChatContext.Provider>
     );

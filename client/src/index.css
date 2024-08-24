@@ -88,6 +88,30 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 2;
 }
 
+.user-offline {
+  display: inline-block;
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  background: rgb(48, 8, 8);
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  z-index: 2;
+}
+
+
+.user-offline1 {
+  display: block;
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  background: rgb(48, 8, 8);
+  position: absolute;
+  margin-left: 22px;
+  margin-top: 7px;
+}
+
 .user-online1 {
   display: block;
   height: 12px;
@@ -95,7 +119,7 @@ h1, h2, h3, h4, h5, h6 {
   position: absolute;
   border-radius: 50%;
   background: rgb(0, 219, 0);
-  margin-left: 19px;
+  margin-left: 22px;
   margin-top: 7px;
 }
 

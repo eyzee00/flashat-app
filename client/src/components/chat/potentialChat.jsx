@@ -5,7 +5,7 @@ import { ChatContext } from "../../context/chatContext";
 
 const PotentialChats = () => {
     const { user } = useContext(AuthContext);
-    const { potentialChats, createChat } = useContext(ChatContext);
+    const { potentialChats, createChat, onlineUsers } = useContext(ChatContext);
     const [showTable, setShowTable] = useState(false);
 
     const toggleTable = () => {
@@ -33,7 +33,12 @@ const PotentialChats = () => {
                             >
                                 <td>{u?.name}</td>
                                 <td>
-                                    <span className="user-online1"></span>
+                                    <span className={
+                                        onlineUsers.some((user) => user.userId === u._id)
+                                            ? "user-online1"
+                                            :
+                                            "user-offline1"
+                                        }></span>
                                 </td>
                             </tr>
                         ))}
