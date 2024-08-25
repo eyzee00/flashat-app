@@ -7,8 +7,6 @@ let onlineUsers = [];
 io.on("connection", (socket) => {
     console.log("New client connected", socket.id);
     const { Server } = require('socket.io');
-
-    const io = new Server({ cors: { origin: "https://flashat-app-frontend.vercel.app" } });
     
     let onlineUsers = [];
     
@@ -71,4 +69,3 @@ io.on("connection", (socket) => {
 
 
 io.listen(3080);
-console.log("Server is running on port 3080");

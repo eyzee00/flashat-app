@@ -48,7 +48,7 @@ export const ChatContextProvider = ({ children, user }) => {
 
     // Create socket connection
     useEffect(() => {
-        const newSocket = io(`${import.meta.env.VITE_REACT_APP_SOCKET_BASE_URL}/`);
+        const newSocket = io("https://52.91.151.109:3080");
         setSocket(newSocket);
     
         return () => { newSocket.disconnect() };
