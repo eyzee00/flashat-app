@@ -1,71 +1,37 @@
+const express = require('express');
+const http = require('http');
 const { Server } = require('socket.io');
 
-const io = new Server({ cors: { 
-    origin: "*",
+// Create an Express application
+const app = express();
+const server = http.createServer(app);
+
+// Initialize Socket.IO with CORS configuration
+const io = new Server(server, {
+  cors: {
+    origin: "https://your-frontend-url.com", // Replace with your frontend URL
     methods: ["GET", "POST"],
-} });
-
-let onlineUsers = [];
-
-io.on("connection", (socket) => {
-    console.log("New client connected", socket.id);
-    
-    io.on("connection", (socket) => {
-        console.log("New client connected", socket.id);
-    
-        socket.on("addNewUser", (userId) => {
-     
-            if (!onlineUsers.some((user) => user.userId === userId) && userId) { 
-                onlineUsers.push({ userId, socketId: socket.id });
-            }
-            io.emit("getOnlineUsers", onlineUsers);
-        });
-    
-        socket.on("sendMessage", (message) => {
-            const recipient = onlineUsers.find((user) => user.userId === message.recipientId);
-            if (recipient) {
-                io.to(recipient.socketId).emit("getMessage", message);
-                io.to(recipient.socketId).emit("getNotification", {
-                    senderId: message.senderId,
-                    isRead: false,
-                    date: new Date(),
-                });
-            }
-        });
-    
-        socket.on("disconnect", () => {
-            onlineUsers = onlineUsers.filter((user) => user.socketId !== socket.id);
-            io.emit("getOnlineUsers", onlineUsers);
-        });
-    });
-    
-    
-    io.listen(3080);
-    socket.on("addNewUser", (userId) => {
- 
-        if (!onlineUsers.some((user) => user.userId === userId) && userId) { 
-            onlineUsers.push({ userId, socketId: socket.id });
-        }
-        io.emit("getOnlineUsers", onlineUsers);
-    });
-
-    socket.on("sendMessage", (message) => {
-        const recipient = onlineUsers.find((user) => user.userId === message.recipientId);
-        if (recipient) {
-            io.to(recipient.socketId).emit("getMessage", message);
-            io.to(recipient.socketId).emit("getNotification", {
-                senderId: message.senderId,
-                isRead: false,
-                date: new Date(),
-            });
-        }
-    });
-
-    socket.on("disconnect", () => {
-        onlineUsers = onlineUsers.filter((user) => user.socketId !== socket.id);
-        io.emit("getOnlineUsers", onlineUsers);
-    });
+    allowedHeaders: ["Content-Type"]
+  }
 });
 
+// Socket.IO event handlers
+io.on('connection', (socket) => {
+  console.log('New client connected', socket.id);
 
-io.listen(3080);
+  // Handle events
+  socket.on('message', (data) => {
+    console.log('Message received:', data);
+    io.emit('message', data);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('Client disconnected', socket.id);
+  });
+});
+
+// Start the server
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
