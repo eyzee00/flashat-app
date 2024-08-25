@@ -9,7 +9,7 @@ const server = http.createServer(app);
 // Initialize Socket.IO with CORS configuration
 const io = new Server(server, {
   cors: {
-    origin: "https://4a583729-95de-4140-aed0-c461f5574797-00-fp09fx5z391b.picard.replit.dev/", // Replace with your frontend URL
+    origin: "https://flashat-app-frontend.vercel.app", // Replace with your frontend URL
     methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type"]
   }

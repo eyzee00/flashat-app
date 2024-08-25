@@ -48,8 +48,7 @@ export const ChatContextProvider = ({ children, user }) => {
 
     // Create socket connection
     useEffect(() => {
-        const newSocket = io("https://4a583729-95de-4140-aed0-c461f5574797-00-fp09fx5z391b.picard.replit.dev");
-        setSocket(newSocket);
+        const newSocket = io("https://4a583729-95de-4140-aed0-c461f5574797-00-fp09fx5z391b.picard.replit.dev:3000/");
     
         return () => { newSocket.disconnect() };
     }, [user]);
