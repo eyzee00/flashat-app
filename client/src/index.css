@@ -13,9 +13,10 @@ body {
   background: rgb(4, 13, 18);
 }
 
-h1, h2, h3, h4, h5, h6 {
+/*h1, h2, h3, h4, h5, h6 {
   font-family: 'DM Serif Text', serif;
 }
+  */
 
 .table-wrapper {
   width: 155px;
@@ -206,11 +207,11 @@ h1, h2, h3, h4, h5, h6 {
   max-height: 50vh;
   width: 300px;
   position: absolute;
-  top: 2rem;
-  right: 0;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
-    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-  background: #181d31;
+  top: 3rem;
+  right: 4rem;
+  box-shadow: rgba(4, 13, 18, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.7) 0px 1px 3px -1px;
+  background: rgba(4, 13, 18, 0.7);
   color: white;
   z-index: 5;
 }
@@ -245,7 +246,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .notification.not-read {
-  background: #263159;
+  background: rgba(70, 100, 89, 0.918);;
 }
 
 .notification-time {
@@ -257,16 +258,16 @@ h1, h2, h3, h4, h5, h6 {
 .notification-count {
   display: flex;
   background: #00bd9b;
-  height: 25px;
-  width: 25px;
+  height: 16px;
+  width: 16px;
   font-size: 14px;
   font-weight: 700;
   border-radius: 50%;
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: -10px;
-  right: -15px;
+  top: 15px;
+  right: 200px;
 }
 
 .this-user-notifications {

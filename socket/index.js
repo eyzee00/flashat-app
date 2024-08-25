@@ -19,6 +19,11 @@ io.on("connection", (socket) => {
         const recipient = onlineUsers.find((user) => user.userId === message.recipientId);
         if (recipient) {
             io.to(recipient.socketId).emit("getMessage", message);
+            io.to(recipient.socketId).emit("getNotification", {
+                senderId: message.senderId,
+                isRead: false,
+                date: new Date(),
+            });
         }
     });
 

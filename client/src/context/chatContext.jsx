@@ -7,6 +7,7 @@ import { createContext, useState, useEffect, useCallback } from 'react';
 import { getRequest, baseUrl, postRequest } from '../utils/services';
 import PropTypes from 'prop-types';
 import { io } from 'socket.io-client';
+import {  } from 'react-bootstrap';
 
 // Create context
 export const ChatContext = createContext();
@@ -39,8 +40,11 @@ export const ChatContextProvider = ({ children, user }) => {
     const [ socket, setSocket ] = useState(null);
     const [ onlineUsers, setOnlineUsers ] = useState([]);
 
-    console.log("List Of Online Users", onlineUsers);
+    const [ notification, setNotification ] = useState([]);
 
+    const [ allUsers, setAllUsers ] = useState([]);
+
+    console.log("Notification:", notification);
 
     // Create socket connection
     useEffect(() => {
@@ -64,7 +68,7 @@ export const ChatContextProvider = ({ children, user }) => {
     useEffect(() => {
         if (socket === null) return;
 
-        const recipientId = currentChat?.members?.find((id) => id !== user?._id);
+        const recipientId = currentChat?.members?.find((member) => member !== user?._id);
 
         if (newMessage) {
             socket.emit("sendMessage", {...newMessage, recipientId});
@@ -81,7 +85,17 @@ export const ChatContextProvider = ({ children, user }) => {
             setMessages((prev) => { return [...prev, response] });
         });
 
-        return () => { socket.off("getMessage") };
+        socket.on("getNotification", (response) => {
+            const isChatOpen = currentChat?.members?.includes(response.senderId);
+
+            if (isChatOpen) setNotification(prev => [{...response, isRead: true}, ...prev]);
+            else setNotification(prev => [ response, ...prev ]);
+        });
+
+        return () => { 
+            socket.off("getMessage");
+            socket.off("getNotification");
+        };
     } , [socket, currentChat]);
 
     // Fetch potential chats
@@ -114,8 +128,10 @@ export const ChatContextProvider = ({ children, user }) => {
                 return isPotentialChat;
             });
 
+
             // Set potential chats to state
             setPotentialChats(filteredUsers);
+            setAllUsers(response);
         };
         getPotentialChats();
     }, [userChats, user]);
@@ -235,12 +251,21 @@ export const ChatContextProvider = ({ children, user }) => {
         getUserChats();
     }, [user]);
 
+
+    const markAllNotificationAsRead = useCallback((notifications) => {
+        const modifiedNotifications = notifications.map((notification) => {
+            return { ...notification, isRead: true };
+        });
+
+        setNotification(modifiedNotifications);
+    }, []);
+
     // Return provider with state variables and functions to be used by children
     return (
         <ChatContext.Provider value={{ userChats, isUserChatsLoading, userChatsError,
           potentialChats, createChat, updateCurrentChat, messages, isMessagesLoading,
             messagesError, currentChat, sendTextMessage, newMessage, sendMessageError, onlineUsers, 
-            setCurrentChat}}>
+            notification, allUsers, markAllNotificationAsRead}}>
             { children }
         </ChatContext.Provider>
     );
