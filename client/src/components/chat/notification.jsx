@@ -8,7 +8,7 @@ const Notification = () => {
 
     const [ switchNeeded, setSwitchNeeded ] = useState(false);
     const [ isNotificationOpen, setIsNotificationOpen ] = useState(false);
-    const { notification, userChats, allUsers, markAllNotificationAsRead } = useContext(ChatContext);
+    const { notification, userChats, allUsers, markAllNotificationAsRead, markNotificationAsRead } = useContext(ChatContext);
     const { user } = useContext(AuthContext);
 
     const unreadNotification = unreadNotifications(notification);
@@ -50,9 +50,16 @@ const Notification = () => {
                     setSwitchNeeded(true);
                 }}>Mark All As Read</div>
             </div>
-            {modifiedNotifications?.length === 0 && !switchNeeded ? <span className="notification">No new notifications</span> : null}
-            {allNotifications.map((notification, index) => (
-                <div key={index} className={notification.isRead ? "notification" : "notification not-read"}>
+            {modifiedNotifications?.length === 0 && switchNeeded ? <span className="notification">
+                No new notifications
+            </span> : null}
+            {modifiedNotifications?.map((notification, index) => (
+                <div key={index} className={notification.isRead ? "notification" : "notification not-read"} 
+                onClick={() => {
+                    setSwitchNeeded(true);
+                    markNotificationAsRead(notification, user, userChats, allNotifications);
+                    setIsNotificationOpen(false);
+                    }}>
                     <span>{`${notification.senderName} sent you a message`}</span>
                     <span className="notification-time">{moment(notification.date).fromNow()}</span>
                 </div>

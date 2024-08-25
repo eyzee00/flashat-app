@@ -249,7 +249,7 @@ export const ChatContextProvider = ({ children, user }) => {
             };
         };
         getUserChats();
-    }, [user]);
+    }, [user, notification]);
 
 
     const markAllNotificationAsRead = useCallback((notifications) => {
@@ -260,12 +260,40 @@ export const ChatContextProvider = ({ children, user }) => {
         setNotification(modifiedNotifications);
     }, []);
 
+    const markNotificationAsRead = useCallback((notification, user, userChats, allNotifications) => {
+        const desiredChat = userChats.find((chat) => 
+            chat.members.includes(user._id) && chat.members.includes(notification.senderId));
+
+        const modifiedNotifications = allNotifications.map((notif) => {
+
+            if (notification.senderId === notif.senderId) return { ...notification, isRead: true };
+            else return notif;
+        });
+
+        updateCurrentChat(desiredChat);
+        setNotification(modifiedNotifications);
+    }, [updateCurrentChat]);
+
+    const markThisUserNotificationAsRead = useCallback((thisUserNotification, notifications) => {
+        const modifiedNotifications = notifications.map((notif) => {
+            let modifiedNotif;
+
+            thisUserNotification.forEach((thisNotif) => {
+                if (notif.senderId === thisNotif.senderId) modifiedNotif = { ...notif, isRead: true };
+                else modifiedNotif = notif;
+            });
+            return modifiedNotif;
+        });
+
+        setNotification(modifiedNotifications);
+    }, []);
+
     // Return provider with state variables and functions to be used by children
     return (
         <ChatContext.Provider value={{ userChats, isUserChatsLoading, userChatsError,
           potentialChats, createChat, updateCurrentChat, messages, isMessagesLoading,
             messagesError, currentChat, sendTextMessage, newMessage, sendMessageError, onlineUsers, 
-            notification, allUsers, markAllNotificationAsRead}}>
+            notification, allUsers, markAllNotificationAsRead, markNotificationAsRead, markThisUserNotificationAsRead}}>
             { children }
         </ChatContext.Provider>
     );
