@@ -20,17 +20,13 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors({
-    origin: 'https://flashat-app-frontend.vercel.app',
-    methods: ['GET', 'POST'],
-    credentials: true
-}));
+app.use(cors());
 app.use('/api/users', userRouter);
 app.use('/api/chats', chatRouter);
 app.use('/api/messages', messageRouter);
 
 // Set up the port and URI
-const port = 6800;
+const port = process.env.PORT || 6800;
 const uri = process.env.ATLAS_URI;
 
 // Start the server
