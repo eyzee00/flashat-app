@@ -1,6 +1,6 @@
 const { Server } = require('socket.io');
 
-const io = new Server({ cors: "https://flashat-app-frontend.vercel.app" });
+const io = new Server({ cors: `${import.meta.env.FRONTEND_BASE_URL}` });
 
 let onlineUsers = [];
 
