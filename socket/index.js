@@ -11,9 +11,6 @@ let onlineUsers = [];
 
 io.on("connection", (socket) => {
     console.log("New client connected", socket.id);
-    const { Server } = require('socket.io');
-    
-    let onlineUsers = [];
     
     io.on("connection", (socket) => {
         console.log("New client connected", socket.id);
