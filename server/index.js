@@ -21,7 +21,7 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(cors({
-    origin: 'https://flashat-app-frontend.vercel.app', // Your frontend URL
+    origin: 'https://flashat-app-frontend.vercel.app',
     methods: ['GET', 'POST'],
     credentials: true
 }));
