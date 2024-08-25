@@ -26,7 +26,7 @@ app.use('/api/chats', chatRouter);
 app.use('/api/messages', messageRouter);
 
 // Set up the port and URI
-const port = process.env.PORT || 6800;
+const port = 6800;
 const uri = process.env.ATLAS_URI;
 
 // Start the server
