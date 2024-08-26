@@ -25,7 +25,7 @@ const httpServer = createServer(app);
 
 const io = new Server(httpServer, {
     cors: {
-        origin: "http://localhost:5173",
+	    origin: "*",
         methods: ["GET", "POST"]
     }
 });
@@ -36,6 +36,20 @@ app.use(cors());
 app.use('/api/users', userRouter);
 app.use('/api/chats', chatRouter);
 app.use('/api/messages', messageRouter);
+
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static("/home/ubuntu/flashat-app/client/dist"));
+
+    app.get('*', (req, res) => {
+        res.sendFile("/home/ubuntu/flashat-app/client/dist/index.html");
+    });
+}
+else {
+    app.get('/', (req, res) => {
+        res.send('API is running...');
+    });
+}
+
 
 // Socket.io
 let onlineUsers = [];

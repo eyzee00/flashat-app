@@ -47,7 +47,7 @@ export const ChatContextProvider = ({ children, user }) => {
 
     // Create socket connection
     useEffect(() => {
-        const newSocket = io("http://localhost:6808");
+        const newSocket = io("http://52.91.151.109:80");
         setSocket(newSocket);
     
         return () => { newSocket.disconnect() };
