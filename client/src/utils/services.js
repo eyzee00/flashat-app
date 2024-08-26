@@ -1,4 +1,4 @@
-export const baseUrl = 'http://localhost:6800/api';
+export const baseUrl = 'http://localhost:6808/api';
 
 export const postRequest = async (url, body) => {
     const response = await fetch(url, {
