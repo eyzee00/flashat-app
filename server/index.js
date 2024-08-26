@@ -11,8 +11,6 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const { createServer } = require('http');
 const { Server } = require('socket.io');
-const path = require('path');
-
 
 // Import routes
 const userRouter = require('./routes/userRoute');
@@ -27,7 +25,7 @@ const httpServer = createServer(app);
 
 const io = new Server(httpServer, {
     cors: {
-        origin: "http://localhost:6808",
+        origin: "http://localhost:5173",
         methods: ["GET", "POST"]
     }
 });
@@ -38,29 +36,6 @@ app.use(cors());
 app.use('/api/users', userRouter);
 app.use('/api/chats', chatRouter);
 app.use('/api/messages', messageRouter);
-
-// Serve static assets if in production
-
-
-
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '../client/dist')));
-
-    app.get('*', (req, res) => {
-        res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'));
-    });
-}
-else {
-    app.get('/', (req, res) => {
-        res.send('API is running...');
-    });
-}
-
-
-
-
-
-//---------------------
 
 // Socket.io
 let onlineUsers = [];
@@ -95,7 +70,7 @@ io.on("connection", (socket) => {
 });
 
 // Set up the port and URI
-const port = process.env.PORT || 6800;
+const port = process.env.PORT || 6808;
 const uri = process.env.ATLAS_URI;
 
 // Start the server

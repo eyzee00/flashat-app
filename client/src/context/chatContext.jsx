@@ -44,7 +44,6 @@ export const ChatContextProvider = ({ children, user }) => {
 
     const [ allUsers, setAllUsers ] = useState([]);
 
-    console.log("Notification:", notification);
 
     // Create socket connection
     useEffect(() => {
