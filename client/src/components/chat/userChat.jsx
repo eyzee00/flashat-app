@@ -46,8 +46,12 @@ const UserChat = ({chat, user}) => {
                         }</div>
                 </div>
             </div>
-            <div className="d-flex flex-column align-items-end">
-                <div className="date">{moment(latestMessage?.createdAt).fromNow()}</div>
+            <div className="d-flex flex-column align-items-end">{
+                latestMessage?.text &&(
+                <div className="date">{
+                 moment(latestMessage?.createdAt).fromNow()
+                }</div>)
+            }
                 {
                     thisUserNotifications?.length !== 0 ? 
                     <div className="this-user-notifications">

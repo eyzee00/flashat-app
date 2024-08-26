@@ -16,7 +16,7 @@ const PotentialChats = () => {
         <div className="table-wrapper">
             <button className="potential-users-button" onClick={toggleTable}>Start Chat</button>
             {showTable && (
-                <Table className="potential-users-table" hover bordered striped style={{ "--bs-table-bg": "none" }}>
+                <Table className="potential-users-table" hover bordered style={{ "--bs-table-bg": "none", "--bs-table-color": "none" }}>
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -50,22 +50,3 @@ const PotentialChats = () => {
 };
 
 export default PotentialChats;
-/*import { ChatContext } from "../../context/chatContext";
-import { Stack } from "react-bootstrap";
-import { AuthContext } from "../../context/authContext";
-
-const PotentialChats = () => {
-    const { user } = useContext(AuthContext);
-    const { potentialChats, createChat } = useContext(ChatContext);
-
-    return <Stack direction="vertical" className="flex-grow-0 stack2" gap={2}>
-        {potentialChats && potentialChats.map((usr, index) => {
-            return (<div className="single-user" key={index} onClick={() => {createChat(usr._id, user._id)}}>
-                        {usr?.name}
-                        <span className="user-online"></span>
-                    </div>);
-        })}
-    </Stack>;
-}
- 
-export default PotentialChats;*/

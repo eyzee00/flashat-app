@@ -8,8 +8,8 @@
 }
 
 body {
-  color: white;
-  font-family: 'Merriweather', serif;
+  color: rgba(224, 224, 224, 0.925);
+  font-family: 'nunito', serif;
   background: rgb(4, 13, 18);
 }
 
@@ -19,18 +19,23 @@ body {
   */
 
 .table-wrapper {
-  width: 155px;
+  width: 248px;
+  position: absolute;
+  top: 60px;
+  left: 0px;
+  text-align: center;
+  text-wrap: wrap;
+  text-overflow: ellipsis;
 }
 
 .potential-users-button {
-  background-color: rgb(24, 61, 61);
-  color: white;
-  border-color: black;
+  background-color: rgb(6, 17, 24);
+  color: #9b9b9be1;
   width: inherit;
 }
 
 .potential-users-table {
-  background-color: rgb(92, 131, 116);
+  background-color: rgb(10, 26, 36);
   color: white;
   border-color: black;
 }
@@ -103,27 +108,26 @@ body {
 
 
 .user-offline1 {
-  display: block;
+  display: flex;
   height: 12px;
   width: 12px;
   border-radius: 50%;
   background: rgb(48, 8, 8);
-  position: absolute;
-  margin-left: 22px;
-  margin-top: 7px;
+  position: relative;
+  margin-left: 44px;
+  margin-top: 5px;
 }
 
 .user-online1 {
-  display: block;
+  display: flex;
   height: 12px;
   width: 12px;
-  position: absolute;
+  position: relative;
   border-radius: 50%;
   background: rgb(0, 219, 0);
-  margin-left: 22px;
-  margin-top: 7px;
+  margin-left: 44px;
+  margin-top: 5px;
 }
-
 
 /* Chat Box */
 .chat-box {
@@ -132,12 +136,13 @@ body {
   background: rgb(6, 19, 26);
   border-radius: 10px;
   text-wrap: wrap;
-
+  margin-left: 140px;
+  margin-right: 32px;
 }
 
 .messages-box {
   height: 85vh;
-  width: 388px;
+  width: 251px;
   text-wrap: wrap;
 
 }
@@ -164,7 +169,7 @@ body {
 
 .message {
   color: white;
-  background: #282828;
+  background: #141414;
   padding: 0.75rem;
   border-radius: 5px;
   max-width: 50%;
@@ -174,7 +179,7 @@ body {
 
 .message.self {
   color: white;
-  background: #00bd9b;
+  background: rgb(9, 25, 36);
 }
 
 .message-footer {
