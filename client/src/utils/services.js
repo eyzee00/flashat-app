@@ -1,4 +1,4 @@
-export const baseUrl = 'https://52.91.151.109:443/api';
+export const baseUrl = 'https://codedemon.tech/api';
 
 export const postRequest = async (url, body) => {
     const response = await fetch(url, {
