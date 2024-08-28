@@ -43,8 +43,8 @@ This project is a real-time chat application built using the MERN stack (MongoDB
 1. **Clone the repository**:
 
     ```bash
-    git clone https://github.com/your-username/your-repository-name.git
-    cd your-repository-name
+    git clone https://github.com/eyzee00/flashat-app.git
+    cd flashat-app/
     ```
 
 2. **Install dependencies**:
@@ -52,14 +52,14 @@ This project is a real-time chat application built using the MERN stack (MongoDB
     For the backend:
     
     ```bash
-    cd backend
+    cd server/
     npm install
     ```
     
     For the frontend:
     
     ```bash
-    cd frontend
+    cd client/
     npm install
     ```
 
@@ -81,8 +81,8 @@ This project is a real-time chat application built using the MERN stack (MongoDB
       Start the Express server:
       
       ```bash
-      cd backend
-      npm start
+      cd server
+      node index.jss # preferably install pm2 and run the server using it
       ```
 
     - **Frontend**:
@@ -126,12 +126,12 @@ When deploying, ensure that your socket connections and other resources are serv
 
 ## Usage
 
-- **Logging In**: Users can log in to access their chats.
+- **Registering And Logging In**: Users can register and log in to access their chats.
 - **Sending Messages**: Users can send and receive messages in real-time.
 - **Notifications**: Receive notifications for new messages.
 - **Online Users**: View which users are currently online.
 
-## Challenges and Learnings
+## Challenges and Learnings From This Project
 
 ### Challenges
 
