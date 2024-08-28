@@ -81,8 +81,8 @@ This project is a real-time chat application built using the MERN stack (MongoDB
       Start the Express server:
       
       ```bash
-      cd server
-      node index.jss # preferably install pm2 and run the server using it
+      cd server/
+      node index.js # preferably install pm2 and run the server using it
       ```
 
     - **Frontend**:
@@ -90,7 +90,7 @@ This project is a real-time chat application built using the MERN stack (MongoDB
       Start the React application using Vite:
       
       ```bash
-      cd frontend
+      cd client/
       npm run dev
       ```
 
